@@ -162,6 +162,13 @@ class Client {
       });
     });
   }
+
+  on(event, callback) {
+    if (!this.connection) {
+      throw new Error('Not connected');
+    }
+    this.connection.on(event, callback);
+  }
 }
 
 export { Client }; // eslint-disable-line import/prefer-default-export

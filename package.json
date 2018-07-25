@@ -23,6 +23,7 @@
     "eslint-plugin-react": "^7.10.0"
   },
   "dependencies": {
+    "is-base64": "0.0.6",
     "meshblu": "^1.34.1"
   }
 }

@@ -24,6 +24,33 @@ function connect(hostname, port, uuid, token) {
   });
 }
 
+function mapDevice(device) {
+  return {
+    id: device.id,
+    name: device.name,
+    status: device.status,
+    schema: device.schema,
+  };
+}
+
+function getDevices(connection) {
+  return new Promise((resolve, reject) => {
+    if (!connection) {
+      reject(new Error('Not connected'));
+      return;
+    }
+
+    connection.devices({ gateways: ['*'] }, (result) => {
+      if (result.error) {
+        reject(result.error);
+        return;
+      }
+
+      resolve(result);
+    });
+  });
+}
+
 class Client {
   constructor(hostname, port, uuid, token) {
     this.hostname = hostname;
@@ -52,6 +79,11 @@ class Client {
         resolve();
       });
     });
+  }
+
+  async getDevices() {
+    const devices = await getDevices(this.connection);
+    return devices.map(mapDevice);
   }
 }
 

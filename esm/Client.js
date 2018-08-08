@@ -135,6 +135,19 @@ class Client {
     });
   }
 
+  async updateSchema(id, schema) {
+    const uuid = await getDeviceUuid(this.connection, id);
+    return new Promise((resolve) => {
+      this.connection.update({
+        uuid,
+        schema: schema,
+      }, () => {
+        resolve();
+      });
+    });
+  }
+
+
   async requestData(id, sensorId) {
     const uuid = await getDeviceUuid(this.connection, id);
     return new Promise((resolve) => {
